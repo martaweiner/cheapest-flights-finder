@@ -13,15 +13,19 @@ import java.util.List;
 public class AirportService {
     private final AirportRepository repository;
 
-    public void save(AirportEntity entity){
+    public void save(AirportEntity entity) {
         repository.save(entity);
     }
 
-    public List<AirportEntity> getAll (){
+    public List<AirportEntity> getAll() {
         return repository.findAll();
     }
 
-    public void delete (String name){
-        repository.deleteByName(name);
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
+
+    public AirportEntity findById(Long id){
+        return repository.findById(id).orElse(null);
     }
 }

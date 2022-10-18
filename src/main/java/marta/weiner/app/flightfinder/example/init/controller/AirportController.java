@@ -1,18 +1,31 @@
 package marta.weiner.app.flightfinder.example.init.controller;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.RequestDataValueProcessor;
+import lombok.RequiredArgsConstructor;
+import marta.weiner.app.flightfinder.example.init.entity.AirportEntity;
+import marta.weiner.app.flightfinder.example.init.service.AirportService;
+import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.Path;
+import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 
 public class AirportController {
-    @PutMapping ("/{name}")
-    public <RequestData> String hello (@PathVariable String name, @RequestBody RequestData data){
-        return "HEJ";
+    private final AirportService service;
+
+    @PostMapping
+    public void add(@RequestBody AirportEntity entity) {
+        service.save(entity);
     }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        service.delete(id);
+    }
+
+    @GetMapping
+    public List<AirportEntity> getAll() {
+        return service.getAll();
+    }
+
 }
