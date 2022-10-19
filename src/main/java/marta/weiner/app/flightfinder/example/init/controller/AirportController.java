@@ -1,7 +1,9 @@
 package marta.weiner.app.flightfinder.example.init.controller;
 
 import lombok.RequiredArgsConstructor;
+import marta.weiner.app.flightfinder.example.init.controller.dto.AirportDto;
 import marta.weiner.app.flightfinder.example.init.entity.AirportEntity;
+import marta.weiner.app.flightfinder.example.init.mapper.AirportMapper;
 import marta.weiner.app.flightfinder.example.init.repository.AirportRepository;
 import marta.weiner.app.flightfinder.example.init.service.AirportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +15,14 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-
+@RequestMapping(value = "/{airport}", method = RequestMethod.GET)
 public class AirportController {
-    @Autowired
+    private final AirportMapper mapper;
     private final AirportService service;
 
     @PostMapping
-    public String add(@RequestBody AirportEntity entity) {
-        service.save(entity);
-        return "Saved.. ";
+    public void add(@RequestBody AirportDto dto) {
+        service.save(mapper.map(dto));
     }
 
     @DeleteMapping(value = "/{id}")
@@ -29,13 +30,12 @@ public class AirportController {
         service.delete(id);
     }
 
-    @Id
-    @GetMapping("/")
+    @GetMapping("/{id}")
     public AirportEntity getById(@PathVariable Long id){
         return service.findById(id);
     }
 
-    @GetMapping("/result")
+    @GetMapping("/")
     public List<AirportEntity> getAll() {
         return service.getAll();
     }
