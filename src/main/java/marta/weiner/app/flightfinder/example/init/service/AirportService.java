@@ -5,6 +5,7 @@ import marta.weiner.app.flightfinder.example.init.entity.AirportEntity;
 import marta.weiner.app.flightfinder.example.init.repository.AirportRepository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Id;
 import java.util.List;
 
 @Service
