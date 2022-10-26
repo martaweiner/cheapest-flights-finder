@@ -14,8 +14,8 @@ import java.util.List;
 public class AirportService {
     private final AirportRepository repository;
 
-    public void save(AirportEntity entity) {
-        repository.save(entity);
+    public AirportEntity save(AirportEntity entity) {
+        return repository.save(entity);
     }
 
     public List<AirportEntity> getAll() {
@@ -29,4 +29,5 @@ public class AirportService {
     public AirportEntity findById(Long id){
         return repository.findById(id).orElse(null);
     }
+
 }
