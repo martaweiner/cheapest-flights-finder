@@ -17,9 +17,9 @@ public class AirportMapper {
 
     public AirportDto map(AirportEntity entity){
         AirportDto dto = new AirportDto();
-        entity.setId(entity.getId());
-        entity.setName(entity.getName());
-        entity.setShortname(entity.getShortname());
+        dto.setId(entity.getId());
+        dto.setName(entity.getName());
+        dto.setShortname(entity.getShortname());
         return dto;
     }
 }

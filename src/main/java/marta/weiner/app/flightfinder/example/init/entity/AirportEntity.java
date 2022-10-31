@@ -24,5 +24,4 @@ public class AirportEntity {
 
     @Column(name = "shortname")
     private String shortname;
-
 }
