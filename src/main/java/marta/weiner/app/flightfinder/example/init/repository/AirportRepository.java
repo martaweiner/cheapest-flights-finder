@@ -10,5 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface AirportRepository extends JpaRepository<AirportEntity, Long> {
-
+    AirportEntity findByShortname(String shortname);
+    AirportEntity findByName(String name);
 }
