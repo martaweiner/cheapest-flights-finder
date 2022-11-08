@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import marta.weiner.app.flightfinder.example.init.entity.AirportEntity;
 import marta.weiner.app.flightfinder.example.init.mapper.CSVMapper;
 import marta.weiner.app.flightfinder.example.init.repository.AirportRepository;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Constraint;
@@ -11,6 +13,7 @@ import javax.validation.Payload;
 
 import javax.persistence.Id;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.List;
 
 @Service
@@ -43,6 +46,18 @@ public class AirportService {
             List<AirportEntity> data = csvMapper.csvToEntities(file.getInputStream());
         for (AirportEntity airport : data) {
             save(airport);
+        }
+    }
+
+    public void saveToCsv(Writer writer) {
+
+        List<AirportEntity> airports = repository.findAll();
+        try (CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
+            csvPrinter.printRecord("id", "name", "shortname");
+            for (AirportEntity airport : airports) {
+                csvPrinter.printRecord(airport.getId(), airport.getShortname(), airport.getName());
+            }
+        } catch (IOException e) {
         }
     }
 
