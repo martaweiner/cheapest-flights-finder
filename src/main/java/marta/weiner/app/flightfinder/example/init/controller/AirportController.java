@@ -8,6 +8,8 @@ import marta.weiner.app.flightfinder.example.init.service.AirportService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,6 +48,13 @@ public class AirportController {
     @PostMapping("/upload")
     public void uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
         service.saveFromCsv(file);
+    }
+
+    @GetMapping(path = "/download")
+    public void downloadFile(HttpServletResponse servletResponse) throws IOException {
+        servletResponse.setContentType("text/csv");
+        servletResponse.addHeader("Content-Disposition","attachment; filename=\"Airports.csv\"");
+        service.saveToCsv(servletResponse.getWriter());
     }
 }
 
